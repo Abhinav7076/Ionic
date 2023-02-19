@@ -7,6 +7,12 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
+  text: string = 'Harry'
+
+  changeText(){
+    this.text = 'Potter'
+  }
+  
   constructor() {}
 
 }
