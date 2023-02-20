@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{recipe?.title}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button [routerLink]="['/recipes']" default-href="#"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <img [src]="recipe?.imageUrl" />
+    <ion-card-header>
+      <ion-card-title>{{recipe?.title}}</ion-card-title>
+    </ion-card-header>
+
+
+    <ion-card-content>
+      <ion-list *ngFor="let ig of recipe?.ingredients">
+        <ion-item>
+          <ion-label>{{ig}}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

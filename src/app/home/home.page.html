@@ -3,9 +3,8 @@
     <ion-buttons slot="start">
       <ion-menu-button auto-hide="false"></ion-menu-button>
     </ion-buttons>
-    <ion-title>
-      Budget Planner
-    </ion-title>
+    <ion-title>Home</ion-title>
+    <ion-title slot="end" [routerLink]="['/recipes']">Recipes</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -18,9 +17,9 @@
           <ion-card-header>
             <ion-card-title>Calculate Expense</ion-card-title>
           </ion-card-header>
-        
+
           <ion-card-content>
-            
+
             <ion-item>
               <ion-label position="floating">Expense Reason</ion-label>
               <ion-input type="text" ngModel reason></ion-input>
@@ -29,17 +28,17 @@
               <ion-label position="floating">Expense Amount</ion-label>
               <ion-input type="number" ngModel amt></ion-input>
               </ion-item>
-      
+
               <ion-button color="danger"><ion-icon name="close-outline"></ion-icon>Clear</ion-button>
-              <ion-button color="primary"><ion-icon name="add-outline"></ion-icon>Add Expense</ion-button>
-          
+              <ion-button color="primary"><ion-icon name="add-outline" slot="end"></ion-icon>Add Expense</ion-button>
+
           </ion-card-content>
 
-    
+
         </ion-card>
-      
+
       </ion-col>
     </ion-row>
   </ion-grid>
-  
+
 </ion-content>
