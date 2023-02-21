@@ -12,18 +12,9 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'recipes',
-    children:[
-      {
-        path: '',
-        loadChildren: () => import('./recipes/recipes.module').then( m => m.RecipesPageModule)
-      },
-      {
-        path: ':recipeId',
-        loadChildren: () => import('./recipes/recipe-detail/recipe-detail-routing.module').then(m => m.RecipeDetailPageRoutingModule)
-      }
-  ]
-  },
+    path: 'score',
+    loadChildren: () => import('./score/score.module').then( m => m.ScorePageModule)
+  }
 ];
 
 @NgModule({

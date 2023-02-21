@@ -1,0 +1,1 @@
+<ion-button shape="round" expand="block" [@divState]="state" [ngClass]="{correct: status === 'correct', wrong: status === 'wrong'}" (click)="checkAnswer(data?.content)">{{data?.content}}</ion-button>

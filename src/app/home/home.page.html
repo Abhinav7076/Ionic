@@ -1,44 +1,31 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar style="--background: #45B8AC; --color: white">
     <ion-buttons slot="start">
       <ion-menu-button auto-hide="false"></ion-menu-button>
     </ion-buttons>
     <ion-title>Home</ion-title>
-    <ion-title slot="end" [routerLink]="['/recipes']">Recipes</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col size-md="6" offset-md="3">
-
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>Calculate Expense</ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content>
-
-            <ion-item>
-              <ion-label position="floating">Expense Reason</ion-label>
-              <ion-input type="text" ngModel reason></ion-input>
-              </ion-item>
-            <ion-item>
-              <ion-label position="floating">Expense Amount</ion-label>
-              <ion-input type="number" ngModel amt></ion-input>
-              </ion-item>
-
-              <ion-button color="danger"><ion-icon name="close-outline"></ion-icon>Clear</ion-button>
-              <ion-button color="primary"><ion-icon name="add-outline" slot="end"></ion-icon>Add Expense</ion-button>
-
-          </ion-card-content>
-
-
-        </ion-card>
-
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
+  <ion-button>Play</ion-button>
+  <div class="row" id="card" *ngIf="this.dataService.timeLeft >= 0">
+    <div class="col-md-12" [ngClass]="{card2: this.dataService.disable}">
+      <h2 id="timer">{{this.dataService.timeLeft}}</h2>
+      <ion-card class="ion-text-center">
+        <ion-card-header>
+          <ion-card-title>{{qData[this.dataService.idx].ques}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list [ngStyle]="{display: 'flex', flexDirection: 'column'}">
+            <app-option (updateIndex)="updateIndex()" [data]="{content: qData[this.dataService.idx].op1, ans: qData[this.dataService.idx].ans}"></app-option>
+            <app-option (updateIndex)="updateIndex()" [data]="{content: qData[this.dataService.idx].op2, ans: qData[this.dataService.idx].ans}"></app-option>
+            <app-option (updateIndex)="updateIndex()" [data]="{content: qData[this.dataService.idx].op3, ans: qData[this.dataService.idx].ans}"></app-option>
+            <app-option (updateIndex)="updateIndex()" [data]="{content: qData[this.dataService.idx].op4, ans: qData[this.dataService.idx].ans}"></app-option>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+  </div>
+  </div>
 </ion-content>
+

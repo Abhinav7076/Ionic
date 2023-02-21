@@ -25,3 +25,25 @@
 #container a {
   text-decoration: none;
 }
+
+ion-item {
+  --padding-start: 0;
+}
+ion-button{
+  --background: #6B5B95;
+  --border-radius: 30px
+}
+
+.card2 {
+  pointer-events: none
+}
+#timer {
+  border-top-left-radius: 45px;
+  border-top-right-radius: 45px;
+  /* border: 3px solid grey; */
+  width: 90px;
+  height: 45px;
+  margin-bottom: 0%;
+  margin-left: 4.25em;
+  /* margin-right: 80%; */
+}

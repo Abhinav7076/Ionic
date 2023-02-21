@@ -1,0 +1,24 @@
+ion-button{
+  --background: #6B5B95;
+}
+
+.correct {
+  --background: #88B04B;
+}
+
+.wrong {
+  --background: #E15D44
+}
+
+button{
+  --background: #6B5B95;
+  width: 100%;
+  border: 10 px solid;
+  border-radius: 30px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
