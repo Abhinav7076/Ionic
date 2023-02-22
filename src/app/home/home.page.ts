@@ -23,6 +23,7 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('card') card: ElementRef | undefined
   anim: Animation | undefined
   isPlaying: boolean = false
+  lock: boolean = false
 
   constructor(protected dataService: DataService, private router: Router, private animationCtrl: AnimationController) {}
 
@@ -32,6 +33,7 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
       if(this.dataService.timeLeft >= 0) {
         this.dataService.timeLeft--;
       } else {
+        this.lock = true
         this.pauseTimer()
         this.updateIndex()
         this.startTimer()
@@ -42,12 +44,14 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
   updateIndex(){
       if(this.dataService.idx >= 3)
           this.router.navigate(['/score'])
-      if(this.dataService.timeLeft>=1)
+      if(!this.lock){
         this.dataService.idx += 1
+      }
       this.anim?.play()
       this.state='normal'
       this.dataService.resetTime()
       this.dataService.disable = false
+      this.lock = false
       this.stopAnim()
   }
 

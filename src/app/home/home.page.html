@@ -14,19 +14,9 @@
   <div class="row" id="card" #card *ngIf="this.dataService.timeLeft >= -1">
     <div class="col-md-12" [ngClass]="{card2: this.dataService.disable}">
 
-      <ion-fab slot="fixed" horizontal="center" vertical="top" *ngIf="this.dataService.timeLeft >= 0 && this.dataService.timeLeft <= this.dataService.timeLimit">
+      <ion-fab slot="fixed" horizontal="center" vertical="top">
         <ion-fab-button>
-          {{this.dataService.timeLeft}}
-        </ion-fab-button>
-      </ion-fab>
-      <ion-fab slot="fixed" horizontal="center" vertical="top" *ngIf="this.dataService.timeLeft <= -1">
-        <ion-fab-button>
-          0
-        </ion-fab-button>
-      </ion-fab>
-      <ion-fab slot="fixed" horizontal="center" vertical="top" *ngIf="this.dataService.timeLeft > this.dataService.timeLimit">
-        <ion-fab-button>
-          {{this.dataService.timeLimit}}
+          {{(this.dataService.timeLeft >= 0 && this.dataService.timeLeft <= this.dataService.timeLimit) ? this.dataService.timeLeft : (this.dataService.timeLeft <= -1 ? 0 : this.dataService.timeLimit)}}
         </ion-fab-button>
       </ion-fab>
       <!-- <h2 id="timer" *ngIf="this.dataService.timeLeft >= 0 && this.dataService.timeLeft <= this.dataService.timeLimit">{{this.dataService.timeLeft}}</h2>
