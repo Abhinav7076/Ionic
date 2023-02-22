@@ -18,6 +18,6 @@ export class DataService {
   }
 
   resetTime(){
-      this.timeLeft = this.timeLimit
+      this.timeLeft = this.timeLimit+2
   }
 }

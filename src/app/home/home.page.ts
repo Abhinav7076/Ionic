@@ -15,6 +15,7 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
     new Quiz('Europa is the moon of which planet ?','Jupiter','Saturn','Mars','Uranus','Jupiter'),
     new Quiz('Zagreb is the capital of which country ?','Slovenia','Croatia','Greece','Hungary','Croatia'),
     new Quiz('Phobos is the moon of which planet ?','Jupiter','Saturn','Mars','Uranus','Mars'),
+    new Quiz('Who created lyre ?','Apollo','Saturn','Mars','Hermes','Hermes'),
   ]
   state: string = 'normal'
   interval: string | number | NodeJS.Timeout | undefined
@@ -25,40 +26,36 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(protected dataService: DataService, private router: Router, private animationCtrl: AnimationController) {}
 
-  checkAnswer(option: any){
-    console.log(option)
-    this.state = 'correct'
-  }
 
   startTimer() {
     this.interval = setInterval(() => {
       if(this.dataService.timeLeft >= 0) {
         this.dataService.timeLeft--;
       } else {
-        clearInterval(this.interval);
-        this.dataService.idx += 1
-        this.dataService.resetTime()
-        if(this.dataService.idx===3)
-          this.router.navigate(['/score'])
+        this.pauseTimer()
+        this.updateIndex()
         this.startTimer()
       }
     },1000)
   }
 
   updateIndex(){
-    if(this.dataService.idx >= 2)
-        this.router.navigate(['/score'])
-      this.dataService.idx += 1
+      if(this.dataService.idx >= 3)
+          this.router.navigate(['/score'])
+      if(this.dataService.timeLeft>=1)
+        this.dataService.idx += 1
       this.anim?.play()
       this.state='normal'
       this.dataService.resetTime()
       this.dataService.disable = false
-
-      setTimeout(() => {
-        this.anim?.stop()
-      }, 1000);
+      this.stopAnim()
   }
 
+  stopAnim(){
+    setTimeout(() => {
+      this.anim?.stop()
+    }, 1000);
+  }
 
   buttonPlay(){
     // if(this.isPlaying)
@@ -73,7 +70,7 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
     clearInterval(this.interval);
   }
   ngOnInit() {
-    // this.startTimer()
+    this.startTimer()
     this.dataService.reset()
   }
 
@@ -84,7 +81,8 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
     .duration(1000)
     .keyframes([
       { offset: 0, transform: 'scale(1)', opacity: '1' },
-      { offset: 0.5, transform: 'scale(0.1)', opacity: '0.1' },
+      { offset: 0.3, transform: 'scale(0.01)', opacity: '0.1' },
+      { offset: 0.7, transform: 'scale(0.01)', opacity: '0.1' },
       { offset: 1, transform: 'scale(1)', opacity: '1' }
     ]);
 

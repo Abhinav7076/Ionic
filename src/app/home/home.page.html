@@ -8,12 +8,31 @@
 </ion-header>
 
 <ion-content>
-  <ion-button (click)="buttonPlay()">Play</ion-button>
+  <div class="space"></div>
+  <!-- <ion-button (click)="pauseTimer()">Play</ion-button> -->
   <!-- <div #square><ion-button>Play</ion-button></div> -->
-  <button #square class="btn"><span>Button</span></button>
-  <div class="row" id="card" #card *ngIf="this.dataService.timeLeft >= 0">
+  <div class="row" id="card" #card *ngIf="this.dataService.timeLeft >= -1">
     <div class="col-md-12" [ngClass]="{card2: this.dataService.disable}">
-      <h2 id="timer">{{this.dataService.timeLeft}}</h2>
+
+      <ion-fab slot="fixed" horizontal="center" vertical="top" *ngIf="this.dataService.timeLeft >= 0 && this.dataService.timeLeft <= this.dataService.timeLimit">
+        <ion-fab-button>
+          {{this.dataService.timeLeft}}
+        </ion-fab-button>
+      </ion-fab>
+      <ion-fab slot="fixed" horizontal="center" vertical="top" *ngIf="this.dataService.timeLeft <= -1">
+        <ion-fab-button>
+          0
+        </ion-fab-button>
+      </ion-fab>
+      <ion-fab slot="fixed" horizontal="center" vertical="top" *ngIf="this.dataService.timeLeft > this.dataService.timeLimit">
+        <ion-fab-button>
+          {{this.dataService.timeLimit}}
+        </ion-fab-button>
+      </ion-fab>
+      <!-- <h2 id="timer" *ngIf="this.dataService.timeLeft >= 0 && this.dataService.timeLeft <= this.dataService.timeLimit">{{this.dataService.timeLeft}}</h2>
+      <h2 id="timer" *ngIf="this.dataService.timeLeft <= -1">0</h2>
+      <h2 id="timer" *ngIf="this.dataService.timeLeft > this.dataService.timeLimit">{{this.dataService.timeLimit}}</h2> -->
+
       <ion-card class="ion-text-center">
         <ion-card-header>
           <ion-card-title>{{qData[this.dataService.idx].ques}}</ion-card-title>
@@ -29,6 +48,8 @@
       </ion-card>
   </div>
   </div>
+
+
 </ion-content>
 
 <ion-footer>

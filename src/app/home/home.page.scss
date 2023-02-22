@@ -138,9 +138,14 @@ ion-button{
   background-color: #c0392b;
 }
 
-.circle {
-  width: 150px;
-  height: 150px;
-  background: red;
-  border-radius: 50%;
+.space {
+  width: 70px;
+  height: 70px;
+}
+
+ion-fab-button {
+  --background: #EFC050;
+  --border-radius: 15px;
+  --color: rgba(0, 0, 0, .6);
+  font-size: large;
 }
