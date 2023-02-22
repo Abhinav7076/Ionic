@@ -19,7 +19,7 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
   state: string = 'normal'
   interval: string | number | NodeJS.Timeout | undefined
 
-  @ViewChild('square') square: ElementRef | undefined
+  @ViewChild('card') card: ElementRef | undefined
   anim: Animation | undefined
   isPlaying: boolean = false
 
@@ -49,9 +49,14 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
     if(this.dataService.idx >= 2)
         this.router.navigate(['/score'])
       this.dataService.idx += 1
+      this.anim?.play()
       this.state='normal'
       this.dataService.resetTime()
       this.dataService.disable = false
+
+      setTimeout(() => {
+        this.anim?.stop()
+      }, 1000);
   }
 
 
@@ -75,15 +80,12 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {
     this.anim = this.animationCtrl.create('myanim')
     this.anim
-    .addElement(this.square?.nativeElement)
-    .duration(1500)
-    .easing('ease-out')
-    // .iterations(Infinity)
-    .fromTo('transform', 'translateX(0px)', 'translateX(100px)')
-    .fromTo('opacity', '1', '0.2')
+    .addElement(this.card?.nativeElement)
+    .duration(1000)
     .keyframes([
-      { offset: 0, background: '#6B5B95' },
-      { offset: 1, background: 'green' }
+      { offset: 0, transform: 'scale(1)', opacity: '1' },
+      { offset: 0.5, transform: 'scale(0.1)', opacity: '0.1' },
+      { offset: 1, transform: 'scale(1)', opacity: '1' }
     ]);
 
   }

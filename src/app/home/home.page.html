@@ -11,7 +11,7 @@
   <ion-button (click)="buttonPlay()">Play</ion-button>
   <!-- <div #square><ion-button>Play</ion-button></div> -->
   <button #square class="btn"><span>Button</span></button>
-  <div class="row" id="card" *ngIf="this.dataService.timeLeft >= 0">
+  <div class="row" id="card" #card *ngIf="this.dataService.timeLeft >= 0">
     <div class="col-md-12" [ngClass]="{card2: this.dataService.disable}">
       <h2 id="timer">{{this.dataService.timeLeft}}</h2>
       <ion-card class="ion-text-center">
@@ -31,3 +31,8 @@
   </div>
 </ion-content>
 
+<ion-footer>
+  <ion-toolbar>
+    <ion-title>Footer</ion-title>
+  </ion-toolbar>
+</ion-footer>

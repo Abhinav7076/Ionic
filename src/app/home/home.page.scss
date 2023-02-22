@@ -137,3 +137,10 @@ ion-button{
 .btn.red:hover, .btn.red:focus {
   background-color: #c0392b;
 }
+
+.circle {
+  width: 150px;
+  height: 150px;
+  background: red;
+  border-radius: 50%;
+}
