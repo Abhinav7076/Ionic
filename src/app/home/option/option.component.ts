@@ -1,7 +1,8 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/data.service';
+import { Animation, AnimationController } from '@ionic/angular';
 
 @Component({
   selector: 'app-option',
@@ -10,15 +11,16 @@ import { DataService } from 'src/app/data.service';
   animations: [
     trigger('divState', [
       state('normal', style({
-        'background-color' : 'white',
+        'background-color' : '#6B5B95',
       })),
       state('correct', style({
-        'color': 'green',
+        'color': 'white',
+        'border-radius': '200px',
         transform: 'scale(1.1)'
       })),
       state('wrong', style({
         'background-color': '#E15D44',
-        'color': 'red',
+        'color': 'white',
         transform: 'scale(1.1)'
       })),
       transition('normal => correct', animate(500)),
@@ -26,25 +28,31 @@ import { DataService } from 'src/app/data.service';
     ])
   ]
 })
-export class OptionComponent implements OnInit {
+export class OptionComponent implements OnInit, AfterViewInit {
   @Input() data: { content: string; ans: string; } | undefined
   @Output() updateIndex = new EventEmitter<void>()
   state: string = 'normal'
   status: string = 'not'
 
-  constructor(private dataService: DataService, private router: Router) { }
+  @ViewChild('optionSel') square: ElementRef | undefined
+  anim: Animation | undefined
+  anim2: Animation | undefined
+  anim3: Animation | undefined
+
+  constructor(private dataService: DataService, private router: Router, private animationCtrl: AnimationController) { }
 
   checkAnswer(option: any){
     this.dataService.disable = true
     console.log("service "+this.dataService.idx+" "+this.dataService.disable)
     if(option === this.data?.ans) {
-      this.state = 'correct'
+      // this.state = 'correct'
       // this.status = 'correct'
+      this.anim?.play()
       this.dataService.score += 1
-      console.log('coorect')
     }
     else{
-      this.state = 'wrong'
+      // this.state = 'wrong'
+      this.anim2?.play()
       // this.status = 'wrong'
     }
     this.playSound()
@@ -53,7 +61,9 @@ export class OptionComponent implements OnInit {
 
     setTimeout(()=> {
       this.updateIndex.emit()
-      this.state = 'normal'
+      // this.state = 'normal'
+      this.anim?.stop()
+      this.anim2?.stop()
      }, 2000)
   }
 
@@ -73,5 +83,37 @@ playSound(){
     audio.play();
   }
 ngOnInit(): void {
+  this.anim = undefined
+  this.anim2 = undefined
 }
+
+ngAfterViewInit(): void {
+  this.anim = this.animationCtrl.create('myanim')
+    this.anim
+    .addElement(this.square?.nativeElement)
+    .duration(1000)
+    .easing('ease-out')
+    // .iterations(Infinity)
+    .fromTo('transform', 'translateX(0px)', 'translateX(100px)')
+    .fromTo('opacity', '1', '0.2')
+    .keyframes([
+      { offset: 0, background: '#6B5B95' },
+      { offset: 1, background: '#88B04B' }
+    ]);
+
+    this.anim2 = this.animationCtrl.create('myanim')
+    this.anim2
+    .addElement(this.square?.nativeElement)
+    .duration(1000)
+    .easing('ease-out')
+    // .iterations(Infinity)
+    .fromTo('transform', 'translateX(0px)', 'translateX(100px)')
+    .fromTo('opacity', '1', '0.2')
+    .keyframes([
+      { offset: 0, background: '#6B5B95' },
+      { offset: 1, background: '#DD4124' }
+    ]);
+
+}
+
 }
