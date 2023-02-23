@@ -1,7 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, Input, OnInit, Output, EventEmitter, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ElementRef, ViewChild, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from 'src/app/data.service';
+import { DataService } from '../data.service';
 import { Animation, AnimationController } from '@ionic/angular';
 
 @Component({
@@ -32,7 +32,6 @@ export class OptionComponent implements OnInit, AfterViewInit {
   @Input() data: { content: string; ans: string; } | undefined
   @Output() updateIndex = new EventEmitter<void>()
   state: string = 'normal'
-  status: string = 'not'
 
   @ViewChild('optionSel') square: ElementRef | undefined
   anim: Animation | undefined
@@ -43,25 +42,25 @@ export class OptionComponent implements OnInit, AfterViewInit {
 
   checkAnswer(option: any){
     this.dataService.disable = true
-    console.log("service "+this.dataService.idx+" "+this.dataService.disable)
-    if(option === this.data?.ans) {
-      // this.state = 'correct'
-      // this.status = 'correct'
-      this.anim?.play()
+    if(option == this.data?.ans) {
       this.dataService.score += 1
+      console.log("correct "+this.dataService.idx+" "+this.dataService.score)
+      this.state = 'correct'
+      this.anim?.play()
     }
     else{
-      // this.state = 'wrong'
+      this.state = 'wrong'
       this.anim2?.play()
-      // this.status = 'wrong'
     }
     this.playSound()
-
-    console.log("service "+this.dataService.idx+" "+this.dataService.disable)
-
+    var timeLeft = this.dataService.timeLeft
+    console.log("Out", this.dataService.timeLeft)
     setTimeout(()=> {
-      this.updateIndex.emit()
-      // this.state = 'normal'
+      if(timeLeft>0){
+        this.updateIndex.emit()
+        console.log(timeLeft)
+      }
+      this.state = 'normal'
       this.anim?.stop()
       this.anim2?.stop()
      }, 2000)
@@ -115,5 +114,6 @@ ngAfterViewInit(): void {
     ]);
 
 }
+
 
 }

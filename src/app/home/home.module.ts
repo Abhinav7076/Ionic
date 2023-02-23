@@ -6,6 +6,7 @@ import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
 import { OptionComponent } from './option/option.component';
+import { DataService } from './data.service';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { OptionComponent } from './option/option.component';
     IonicModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage, OptionComponent]
+  declarations: [HomePage, OptionComponent],
+  providers: [DataService]
 })
 export class HomePageModule {}

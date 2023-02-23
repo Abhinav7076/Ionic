@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ScorePageRoutingModule } from './score-routing.module';
 
 import { ScorePage } from './score.page';
+import { CountdownModule } from 'ngx-countdown';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ScorePageRoutingModule
+    ScorePageRoutingModule,
+    CountdownModule
   ],
   declarations: [ScorePage]
 })

@@ -14,7 +14,7 @@ const routes: Routes = [
   {
     path: 'score',
     loadChildren: () => import('./score/score.module').then( m => m.ScorePageModule)
-  }
+  },
 ];
 
 @NgModule({

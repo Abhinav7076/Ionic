@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from '../data.service';
+import { DataService } from './data.service';
 import { Quiz } from './quiz.model';
 import { Animation, AnimationController } from '@ionic/angular';
 
@@ -23,7 +23,7 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('card') card: ElementRef | undefined
   anim: Animation | undefined
   isPlaying: boolean = false
-  lock: boolean = false
+
 
   constructor(protected dataService: DataService, private router: Router, private animationCtrl: AnimationController) {}
 
@@ -33,7 +33,7 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
       if(this.dataService.timeLeft >= 0) {
         this.dataService.timeLeft--;
       } else {
-        this.lock = true
+        console.log("in timer")
         this.pauseTimer()
         this.updateIndex()
         this.startTimer()
@@ -41,17 +41,22 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
     },1000)
   }
 
+
   updateIndex(){
-      if(this.dataService.idx >= 3)
-          this.router.navigate(['/score'])
-      if(!this.lock){
-        this.dataService.idx += 1
+      console.log("in update outside lock, index", this.dataService.idx, this.qData.length-1)
+
+      if(this.dataService.idx >= this.qData.length-1){
+          this.router.navigate(['/score'], {state:{score: this.dataService.score, maxScore:this.qData.length}})
+          this.pauseTimer()
       }
+
       this.anim?.play()
+
+      this.dataService.idx += 1
+
       this.state='normal'
       this.dataService.resetTime()
       this.dataService.disable = false
-      this.lock = false
       this.stopAnim()
   }
 
@@ -61,18 +66,11 @@ export class HomePage implements OnInit, OnDestroy, AfterViewInit {
     }, 1000);
   }
 
-  buttonPlay(){
-    // if(this.isPlaying)
-    //   this.anim?.pause()
-    // else
-      this.anim?.play()
-
-    this.isPlaying = !this.isPlaying
-  }
-
   pauseTimer() {
     clearInterval(this.interval);
   }
+
+
   ngOnInit() {
     this.startTimer()
     this.dataService.reset()
